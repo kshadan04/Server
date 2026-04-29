@@ -1,12 +1,13 @@
 
 using Microsoft.EntityFrameworkCore;
 using Server.Data;
+using System.Threading.Tasks;
 
 namespace Server
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,13 @@ namespace Server
                 options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
             var app = builder.Build();
+
+            //******************** this service is used to add the data in database automatic from another data configuration class
+            using(var scope = app.Services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                await DbSeeder.SeedAsync(context);
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

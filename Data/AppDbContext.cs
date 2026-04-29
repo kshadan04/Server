@@ -87,13 +87,13 @@ namespace Server.Data
                 entity.HasOne(pm => pm.User)
                 .WithMany(u => u.ProjectMembers)
                 .HasForeignKey(pm => pm.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
                 //Relationship(projectMember => Project)
                 entity.HasOne(pm =>pm.Project)
                 .WithMany(p => p.ProjectMembers)
                 .HasForeignKey(pm => pm.ProjectId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
             });
 
             //TaskAssignment
@@ -105,13 +105,13 @@ namespace Server.Data
                 entity.HasOne(ta => ta.User)
                 .WithMany(u => u.Assignments)
                 .HasForeignKey(ta =>ta.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
                 //Relationship(taskAssignment => TaskItem)
                 entity.HasOne(ta => ta.TaskItem)
                 .WithMany(t => t.Assignments)
                 .HasForeignKey(ta => ta.TaskItemId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
             });
 
             //Role
@@ -130,13 +130,13 @@ namespace Server.Data
                 entity.HasOne(ur => ur.User)
                 .WithMany(u => u.UserRoles)
                 .HasForeignKey(ur => ur.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
                 //Relationship(userRole => Role)
                 entity.HasOne(ur => ur.Role)
                 .WithMany(r => r.UserRoles)
                 .HasForeignKey(ur => ur.RoleId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
             });
         }
 
